@@ -1,3 +1,6 @@
+import java.util.Stack;
+import java.util.ArrayDeque;
+
 class Node {
     private int value;
     private Node left;
@@ -93,6 +96,40 @@ class Tree {
         }
     }
 
+    public void printBreadthFirst() {
+        ArrayDeque<Node> queue = new ArrayDeque<Node>();
+        Node temp;
+        if (root != null) {
+            queue.add(root);
+        }
+        while (queue.isEmpty() == false){
+            temp = queue.remove();
+            System.out.print(temp.getValue() + ", ");
+            if (temp.getLeft() != null)
+                queue.add(temp.getLeft());
+            if (temp.getRight() != null)
+                queue.add(temp.getRight());
+        }
+        System.out.println();
+    }
+
+    public void printDepthFirst() {
+        Stack<Node> stack = new Stack<Node>();
+        Node temp;
+        if (root != null) {
+            stack.push(root);
+        }
+        while (stack.isEmpty() == false) {
+            temp = stack.pop();
+            System.out.print(temp.getValue() + ", ");
+            if (temp.getLeft() != null)
+                stack.push(temp.getLeft());
+            if (temp.getRight() != null)
+                stack.push(temp.getRight());
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args){
         Tree tree = new Tree();
         tree.insert(50);
@@ -108,6 +145,10 @@ class Tree {
         tree.printPostOrder();
         System.out.print("inorder: ");
         tree.printInOrder();
+        System.out.print("breadth first: ");
+        tree.printBreadthFirst();
+        System.out.print("depth first: ");
+        tree.printDepthFirst();
 
     }
 
