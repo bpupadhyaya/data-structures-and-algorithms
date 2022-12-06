@@ -130,6 +130,42 @@ class Tree {
         System.out.println();
     }
 
+    public boolean find(int value) {
+        Node currNode = root;
+        while (currNode != null) {
+            if (currNode.getValue() == value) {
+                return true;
+            } else if (currNode.getValue() > value) {
+                currNode = currNode.getLeft();
+            } else {
+                currNode = currNode.getRight();
+            }
+        }
+        return false;
+    }
+
+    public int findMin() {
+        Node node = root;
+        if (node == null) {
+            return 0;
+        }
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node.getValue();
+    }
+
+    public int findMax() {
+        Node node = root;
+        if (node == null) {
+            return 0;
+        }
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node.getValue();
+    }
+
     public static void main(String[] args){
         Tree tree = new Tree();
         tree.insert(50);
@@ -149,6 +185,10 @@ class Tree {
         tree.printBreadthFirst();
         System.out.print("depth first: ");
         tree.printDepthFirst();
+        System.out.println("find: " + tree.find(45));
+        System.out.println("find: " + tree.find(46));
+        System.out.println("min: " + tree.findMin());
+        System.out.println("max: " + tree.findMax());
 
     }
 
