@@ -166,6 +166,76 @@ class Tree {
         return node.getValue();
     }
 
+    public int treeDepth() {
+        return treeDepth(root);
+    }
+
+    private int treeDepth(Node currNode) {
+        if (currNode == null)
+            return 0;
+        else {
+            int leftDepth = treeDepth(currNode.getLeft());
+            int rightDepth = treeDepth(currNode.getRight());
+            if (leftDepth > rightDepth)
+                return leftDepth + 1;
+            else
+                return rightDepth + 1;
+        }
+    }
+
+    public Node findMaxNode(Node currNode) {
+        Node node = currNode;
+        if (currNode == null) {
+            return null;
+        }
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node;
+    }
+    public Node findMinNode(Node currNode) {
+        Node node = currNode;
+        if (currNode == null) {
+            return null;
+        }
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node;
+    }
+
+    public void deleteNode(int value) {
+        root = deleteNode(root, value);
+    }
+
+    private Node deleteNode(Node node, int value) {
+        if (node != null) {
+            if (node.getValue() == value) {
+                if (node.getLeft() == null && node.getRight() == null) {
+                    return null;
+                } else {
+                    if (node.getLeft() == null) {
+                        return node.getRight();
+                    }
+                    if (node.getRight() == null) {
+                        return node.getLeft();
+                    }
+                    Node minNode = findMinNode(node.getRight());
+                    int minValue = minNode.getValue();
+                    node.setValue(minValue);
+                    node.setRight(deleteNode(node.getRight(), minValue));
+                }
+            } else {
+                if (node.getValue() > value) {
+                    node.setLeft(deleteNode(node.getLeft(), value));
+                } else {
+                    node.setRight(deleteNode(node.getRight(), value));
+                }
+            }
+        }
+        return node;
+    }
+
     public static void main(String[] args){
         Tree tree = new Tree();
         tree.insert(50);
@@ -189,6 +259,10 @@ class Tree {
         System.out.println("find: " + tree.find(46));
         System.out.println("min: " + tree.findMin());
         System.out.println("max: " + tree.findMax());
+        System.out.println("depth: " + tree.treeDepth());
+        System.out.println("deleting an element: ");
+        tree.deleteNode(40);
+        tree.printInOrder();
 
     }
 
