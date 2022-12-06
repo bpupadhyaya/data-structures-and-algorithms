@@ -236,6 +236,21 @@ class Tree {
         return node;
     }
 
+    public boolean isEqual(Tree anotherTree) {
+        return checkEquality(root, anotherTree.root);
+    }
+
+    private boolean checkEquality(Node node1, Node node2) {
+        if (node1 == null && node2 == null)
+            return true;
+        else if (node1 == null || node2 == null)
+            return false;
+        else
+            return (checkEquality(node1.getLeft(), node2.getLeft())
+                    && checkEquality(node1.getRight(), node2.getRight())
+                    && (node1.getValue() == node2.getValue()));
+    }
+
     public static void main(String[] args){
         Tree tree = new Tree();
         tree.insert(50);
@@ -263,7 +278,14 @@ class Tree {
         System.out.println("deleting an element: ");
         tree.deleteNode(40);
         tree.printInOrder();
-
+        Tree tree2 = new Tree();
+        tree2.insert(50);
+        tree2.insert(70);
+        tree2.insert(45);
+        tree2.insert(35);
+        tree2.insert(60);
+        tree2.insert(80);
+        System.out.println("equality: " + tree.isEqual(tree2));
     }
 
 }
